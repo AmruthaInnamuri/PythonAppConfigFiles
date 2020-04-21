@@ -1,0 +1,43 @@
+﻿kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: simple-python-app
+  namespace: sample-python-app
+  selfLink: >-
+    /apis/route.openshift.io/v1/namespaces/sample-python-app/routes/simple-python-app
+  uid: 58065325-7419-11ea-82d1-0a580a820006
+  resourceVersion: '164990807'
+  creationTimestamp: '2020-04-01T13:04:38Z'
+  labels:
+    app: simple-python-app
+    app.kubernetes.io/component: simple-python-app
+    app.kubernetes.io/instance: simple-python-app
+    app.kubernetes.io/name: python
+    app.kubernetes.io/part-of: simple-python-app
+    app.openshift.io/runtime: python
+    app.openshift.io/runtime-version: '3.6'
+  annotations:
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: 'https://github.com/mmumshad/simple-webapp-flask'
+    openshift.io/host.generated: 'true'
+spec:
+  host: >-
+    simple-python-app-sample-python-app.apps.us-east-2.starter.openshift-online.com
+  to:
+    kind: Service
+    name: simple-python-app
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: >-
+        simple-python-app-sample-python-app.apps.us-east-2.starter.openshift-online.com
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+          lastTransitionTime: '2020-04-01T13:04:39Z'
+      wildcardPolicy: None
+      routerCanonicalHostname: apps.us-east-2.starter.openshift-online.com

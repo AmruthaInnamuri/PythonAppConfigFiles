@@ -1,0 +1,119 @@
+﻿kind: Build
+apiVersion: build.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/build-config.name: simple-python-app
+    openshift.io/build.number: '1'
+    openshift.io/build.pod-name: simple-python-app-1-build
+  selfLink: >-
+    /apis/build.openshift.io/v1/namespaces/sample-python-app/builds/simple-python-app-1
+  resourceVersion: '164991779'
+  name: simple-python-app-1
+  uid: 58835378-7419-11ea-874e-0a580a800009
+  creationTimestamp: '2020-04-01T13:04:39Z'
+  namespace: sample-python-app
+  ownerReferences:
+    - apiVersion: build.openshift.io/v1
+      kind: BuildConfig
+      name: simple-python-app
+      uid: 5804eb05-7419-11ea-874e-0a580a800009
+      controller: true
+  labels:
+    app: simple-python-app
+    app.kubernetes.io/part-of: simple-python-app
+    app.kubernetes.io/instance: simple-python-app
+    openshift.io/build-config.name: simple-python-app
+    app.kubernetes.io/component: simple-python-app
+    openshift.io/build.start-policy: Serial
+    buildconfig: simple-python-app
+    app.openshift.io/runtime: python
+    app.kubernetes.io/name: python
+    app.openshift.io/runtime-version: '3.6'
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'simple-python-app:latest'
+    pushSecret:
+      name: builder-dockercfg-qdn59
+  resources: {}
+  triggeredBy:
+    - message: Image change
+      imageChangeBuild:
+        imageID: >-
+          image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:3a3a3331ae28b4748a0a48f3c6313c7ad355e17b71087df347196200e2e23cc1
+        fromRef:
+          kind: ImageStreamTag
+          namespace: openshift
+          name: 'python:3.6'
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: DockerImage
+        name: >-
+          image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:3a3a3331ae28b4748a0a48f3c6313c7ad355e17b71087df347196200e2e23cc1
+      pullSecret:
+        name: builder-dockercfg-qdn59
+  postCommit: {}
+  serviceAccount: builder
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/mmumshad/simple-webapp-flask'
+    contextDir: /
+  revision:
+    type: Git
+    git:
+      commit: e2e6359a2c7951aa0c5f2602cd21802168d12337
+      author:
+        name: Mumshad Mannambeth
+        email: mmumshad@gmail.com
+      committer:
+        name: GitHub
+        email: noreply@github.com
+      message: 'Merge pull request #6 from suyogpatil/patch-3'
+status:
+  phase: Complete
+  startTimestamp: '2020-04-01T13:04:40Z'
+  completionTimestamp: '2020-04-01T13:05:47Z'
+  duration: 67000000000
+  outputDockerImageReference: >-
+    image-registry.openshift-image-registry.svc:5000/sample-python-app/simple-python-app:latest
+  config:
+    kind: BuildConfig
+    namespace: sample-python-app
+    name: simple-python-app
+  output:
+    to:
+      imageDigest: 'sha256:1a2e575886dd9554a4bd1a12592359951951093b47103017b0fd67e3e1da72ae'
+  stages:
+    - name: FetchInputs
+      startTime: '2020-04-01T13:04:53Z'
+      durationMilliseconds: 495
+      steps:
+        - name: FetchGitSource
+          startTime: '2020-04-01T13:04:53Z'
+          durationMilliseconds: 495
+    - name: PullImages
+      startTime: '2020-04-01T13:04:56Z'
+      durationMilliseconds: 41057
+      steps:
+        - name: PullBaseImage
+          startTime: '2020-04-01T13:04:56Z'
+          durationMilliseconds: 41057
+    - name: Build
+      startTime: '2020-04-01T13:05:37Z'
+      durationMilliseconds: 7686
+      steps:
+        - name: DockerBuild
+          startTime: '2020-04-01T13:05:37Z'
+          durationMilliseconds: 7686
+    - name: PushImage
+      startTime: '2020-04-01T13:05:44Z'
+      durationMilliseconds: 2253
+      steps:
+        - name: PushImage
+          startTime: '2020-04-01T13:05:44Z'
+          durationMilliseconds: 2253

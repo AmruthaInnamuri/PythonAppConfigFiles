@@ -1,0 +1,39 @@
+﻿kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: 'https://github.com/mmumshad/simple-webapp-flask'
+  selfLink: >-
+    /apis/image.openshift.io/v1/namespaces/sample-python-app/imagestreams/simple-python-app
+  resourceVersion: '164991761'
+  name: simple-python-app
+  uid: 58015513-7419-11ea-874e-0a580a800009
+  creationTimestamp: '2020-04-01T13:04:38Z'
+  generation: 1
+  namespace: sample-python-app
+  labels:
+    app: simple-python-app
+    app.kubernetes.io/component: simple-python-app
+    app.kubernetes.io/instance: simple-python-app
+    app.kubernetes.io/name: python
+    app.kubernetes.io/part-of: simple-python-app
+    app.openshift.io/runtime: python
+    app.openshift.io/runtime-version: '3.6'
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: >-
+    image-registry.openshift-image-registry.svc:5000/sample-python-app/simple-python-app
+  publicDockerImageRepository: >-
+    default-route-openshift-image-registry.apps.us-east-2.starter.openshift-online.com/sample-python-app/simple-python-app
+  tags:
+    - tag: latest
+      items:
+        - created: '2020-04-01T13:05:47Z'
+          dockerImageReference: >-
+            image-registry.openshift-image-registry.svc:5000/sample-python-app/simple-python-app@sha256:1a2e575886dd9554a4bd1a12592359951951093b47103017b0fd67e3e1da72ae
+          image: >-
+            sha256:1a2e575886dd9554a4bd1a12592359951951093b47103017b0fd67e3e1da72ae
+          generation: 1

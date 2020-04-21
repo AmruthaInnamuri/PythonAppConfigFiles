@@ -1,0 +1,137 @@
+﻿kind: Pod
+apiVersion: v1
+metadata:
+  generateName: simple-python-app-1-
+  annotations:
+    k8s.v1.cni.cncf.io/networks-status: |-
+      [{
+          "name": "openshift-sdn",
+          "interface": "eth0",
+          "ips": [
+              "10.129.10.9"
+          ],
+          "default": true,
+          "dns": {}
+      }]
+    kubernetes.io/limit-ranger: >-
+      LimitRanger plugin set: cpu, memory request for container
+      simple-python-app; cpu, memory limit for container simple-python-app
+    openshift.io/deployment-config.latest-version: '1'
+    openshift.io/deployment-config.name: simple-python-app
+    openshift.io/deployment.name: simple-python-app-1
+    openshift.io/scc: restricted
+  selfLink: /api/v1/namespaces/sample-python-app/pods/simple-python-app-1-hlqp4
+  resourceVersion: '166240289'
+  name: simple-python-app-1-hlqp4
+  uid: 6d1eca5d-74f0-11ea-b010-02450387fbf4
+  creationTimestamp: '2020-04-02T14:44:15Z'
+  namespace: sample-python-app
+  ownerReferences:
+    - apiVersion: v1
+      kind: ReplicationController
+      name: simple-python-app-1
+      uid: 812ef89a-7419-11ea-83c9-06ef430e38e6
+      controller: true
+      blockOwnerDeletion: true
+  labels:
+    app: simple-python-app
+    deployment: simple-python-app-1
+    deploymentconfig: simple-python-app
+spec:
+  restartPolicy: Always
+  serviceAccountName: default
+  imagePullSecrets:
+    - name: default-dockercfg-pr77l
+  priority: 0
+  schedulerName: default-scheduler
+  enableServiceLinks: true
+  terminationGracePeriodSeconds: 30
+  nodeName: ip-10-0-138-153.us-east-2.compute.internal
+  securityContext:
+    seLinuxOptions:
+      level: 's0:c129,c4'
+    fsGroup: 1016520000
+  containers:
+    - resources:
+        limits:
+          cpu: '1'
+          memory: 512Mi
+        requests:
+          cpu: 20m
+          memory: 256Mi
+      terminationMessagePath: /dev/termination-log
+      name: simple-python-app
+      securityContext:
+        capabilities:
+          drop:
+            - KILL
+            - MKNOD
+            - SETGID
+            - SETUID
+        runAsUser: 1016520000
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: default-token-79wdx
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePolicy: File
+      image: >-
+        image-registry.openshift-image-registry.svc:5000/sample-python-app/simple-python-app@sha256:1a2e575886dd9554a4bd1a12592359951951093b47103017b0fd67e3e1da72ae
+  serviceAccount: default
+  volumes:
+    - name: default-token-79wdx
+      secret:
+        secretName: default-token-79wdx
+        defaultMode: 420
+  dnsPolicy: ClusterFirst
+  tolerations:
+    - key: node.kubernetes.io/memory-pressure
+      operator: Exists
+      effect: NoSchedule
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+status:
+  phase: Running
+  conditions:
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2020-04-02T14:44:16Z'
+    - type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2020-04-02T14:44:28Z'
+    - type: ContainersReady
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2020-04-02T14:44:28Z'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2020-04-02T14:44:16Z'
+  hostIP: 10.0.138.153
+  podIP: 10.129.10.9
+  startTime: '2020-04-02T14:44:16Z'
+  containerStatuses:
+    - name: simple-python-app
+      state:
+        running:
+          startedAt: '2020-04-02T14:44:27Z'
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: >-
+        image-registry.openshift-image-registry.svc:5000/sample-python-app/simple-python-app@sha256:1a2e575886dd9554a4bd1a12592359951951093b47103017b0fd67e3e1da72ae
+      imageID: >-
+        image-registry.openshift-image-registry.svc:5000/sample-python-app/simple-python-app@sha256:1a2e575886dd9554a4bd1a12592359951951093b47103017b0fd67e3e1da72ae
+      containerID: 'cri-o://f0a9aaccd0b57e9414eee36390c98a9a5c6643211c950df863732451bf011dd6'
+  qosClass: Burstable

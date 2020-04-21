@@ -1,0 +1,60 @@
+﻿kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: simple-python-app
+  namespace: sample-python-app
+  selfLink: >-
+    /apis/build.openshift.io/v1/namespaces/sample-python-app/buildconfigs/simple-python-app
+  uid: 5804eb05-7419-11ea-874e-0a580a800009
+  resourceVersion: '164990816'
+  creationTimestamp: '2020-04-01T13:04:38Z'
+  labels:
+    app: simple-python-app
+    app.kubernetes.io/component: simple-python-app
+    app.kubernetes.io/instance: simple-python-app
+    app.kubernetes.io/name: python
+    app.kubernetes.io/part-of: simple-python-app
+    app.openshift.io/runtime: python
+    app.openshift.io/runtime-version: '3.6'
+  annotations:
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: 'https://github.com/mmumshad/simple-webapp-flask'
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'simple-python-app:latest'
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: openshift
+        name: 'python:3.6'
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/mmumshad/simple-webapp-flask'
+    contextDir: /
+  triggers:
+    - type: Generic
+      generic:
+        secretReference:
+          name: simple-python-app-generic-webhook-secret
+    - type: GitHub
+      github:
+        secretReference:
+          name: simple-python-app-github-webhook-secret
+    - type: ImageChange
+      imageChange:
+        lastTriggeredImageID: >-
+          image-registry.openshift-image-registry.svc:5000/openshift/python@sha256:3a3a3331ae28b4748a0a48f3c6313c7ad355e17b71087df347196200e2e23cc1
+    - type: ConfigChange
+  runPolicy: Serial
+status:
+  lastVersion: 1

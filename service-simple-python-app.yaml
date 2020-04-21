@@ -1,0 +1,34 @@
+﻿kind: Service
+apiVersion: v1
+metadata:
+  name: simple-python-app
+  namespace: sample-python-app
+  selfLink: /api/v1/namespaces/sample-python-app/services/simple-python-app
+  uid: 58066a84-7419-11ea-abf6-02450387fbf4
+  resourceVersion: '164990799'
+  creationTimestamp: '2020-04-01T13:04:38Z'
+  labels:
+    app: simple-python-app
+    app.kubernetes.io/component: simple-python-app
+    app.kubernetes.io/instance: simple-python-app
+    app.kubernetes.io/name: python
+    app.kubernetes.io/part-of: simple-python-app
+    app.openshift.io/runtime: python
+    app.openshift.io/runtime-version: '3.6'
+  annotations:
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: 'https://github.com/mmumshad/simple-webapp-flask'
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: simple-python-app
+    deploymentconfig: simple-python-app
+  clusterIP: 172.30.214.89
+  type: ClusterIP
+  sessionAffinity: None
+status:
+  loadBalancer: {}

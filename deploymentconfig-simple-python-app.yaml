@@ -1,0 +1,99 @@
+﻿kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  annotations:
+    app.openshift.io/vcs-ref: master
+    app.openshift.io/vcs-uri: 'https://github.com/mmumshad/simple-webapp-flask'
+  selfLink: >-
+    /apis/apps.openshift.io/v1/namespaces/sample-python-app/deploymentconfigs/simple-python-app
+  resourceVersion: '166240292'
+  name: simple-python-app
+  uid: 5805b0c8-7419-11ea-81af-0a580a810008
+  creationTimestamp: '2020-04-01T13:04:38Z'
+  generation: 2
+  namespace: sample-python-app
+  labels:
+    app: simple-python-app
+    app.kubernetes.io/component: simple-python-app
+    app.kubernetes.io/instance: simple-python-app
+    app.kubernetes.io/name: python
+    app.kubernetes.io/part-of: simple-python-app
+    app.openshift.io/runtime: python
+    app.openshift.io/runtime-version: '3.6'
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - simple-python-app
+        from:
+          kind: ImageStreamTag
+          namespace: sample-python-app
+          name: 'simple-python-app:latest'
+        lastTriggeredImage: >-
+          image-registry.openshift-image-registry.svc:5000/sample-python-app/simple-python-app@sha256:1a2e575886dd9554a4bd1a12592359951951093b47103017b0fd67e3e1da72ae
+    - type: ConfigChange
+  replicas: 1
+  revisionHistoryLimit: 10
+  test: false
+  selector:
+    app: simple-python-app
+    deploymentconfig: simple-python-app
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: simple-python-app
+        deploymentconfig: simple-python-app
+    spec:
+      containers:
+        - name: simple-python-app
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/sample-python-app/simple-python-app@sha256:1a2e575886dd9554a4bd1a12592359951951093b47103017b0fd67e3e1da72ae
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+status:
+  observedGeneration: 2
+  details:
+    message: config change
+    causes:
+      - type: ConfigChange
+  availableReplicas: 1
+  unavailableReplicas: 0
+  latestVersion: 1
+  updatedReplicas: 1
+  conditions:
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2020-04-01T13:06:06Z'
+      lastTransitionTime: '2020-04-01T13:05:56Z'
+      reason: NewReplicationControllerAvailable
+      message: replication controller "simple-python-app-1" successfully rolled out
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2020-04-02T14:44:28Z'
+      lastTransitionTime: '2020-04-02T14:44:28Z'
+      message: Deployment config has minimum availability.
+  replicas: 1
+  readyReplicas: 1
